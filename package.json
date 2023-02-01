@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/ayushman-sinha/LeetCode-Predictor/issues"
   },
-  "homepage": "https://github.com/ayushman-sinha/LeetCode-Predictor#readme"
+  "homepage": "https://github.com/ayushman-sinha/LeetCode-Predictor#readme",
+  "dependencies": {
+    "graphql": "^16.6.0",
+    "graphql-request": "^5.1.0"
+  }
 }
