@@ -1,0 +1,20 @@
+{
+  "name": "leetcode-predictor",
+  "version": "1.0.0",
+  "description": "Used to predict the ratings of the user after a contest",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ayushman-sinha/LeetCode-Predictor.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ayushman-sinha/LeetCode-Predictor/issues"
+  },
+  "homepage": "https://github.com/ayushman-sinha/LeetCode-Predictor#readme"
+}
