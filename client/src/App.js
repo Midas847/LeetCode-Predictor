@@ -27,7 +27,7 @@ const App = () => {
         <p>Loading...</p>
       ) : (
         data.map((item) => {
-          return <div>{item}</div>;
+          return <div>{item}<br/></div>;
         })
       )}
     </div>
