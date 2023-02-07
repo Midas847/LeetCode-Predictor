@@ -5,8 +5,8 @@ const App = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     const res = axios.get("http://localhost:3500/api/routes/leetcode");
-    setData(res.data);
-    console.log(res.data);
+    setData(res);
+    console.log(res);
   }, []);
   return <div></div>;
 };
