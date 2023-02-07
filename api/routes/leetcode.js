@@ -1,7 +1,7 @@
 const { default: axios } = require("axios");
 const router = require("express").Router();
 const query = require("./Queries/contestInfo.js");
-const URL = "https://leetcode.com/contest/api/ranking/weekly-contest-291/";
+const URL = "https://leetcode.com/contest/api/ranking/weekly-contest-121/";
 router.get("/", async (req, res) => {
   try {
     const response = await axios.get(URL);
@@ -9,7 +9,7 @@ router.get("/", async (req, res) => {
     const total_pages = Math.ceil(num_of_users / 25); //Total number of pages
     //console.log(total_pages);
     let result = [];
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= total_pages; i++) {
       const response_each = await axios.get(URL + "?pagination="+i+"&region=global");
       // console.log(response_each.data.total_rank);
       JSON.stringify(response_each.data.total_rank);
