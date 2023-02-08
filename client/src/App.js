@@ -15,7 +15,7 @@ const App = () => {
       .get("http://localhost:3500/api/routes/leetcode")
       .then((res) => {
         setData(res.data);
-        console.log(res.data);
+        console.log(JSON.stringify(res.data));
       })
       .catch((error) => {
         console.log(error);
