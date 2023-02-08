@@ -28,7 +28,7 @@ const App = () => {
       ) : (
         data.map((item) => {
           return item.map((item1) => {
-            return <div>{item1}</div>;
+            return <p><div>Username : {item1.username}</div><div> Previous Rating : {item1.rating}</div></p>;
           });
         })
       )}
