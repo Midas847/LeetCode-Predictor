@@ -1,7 +1,7 @@
 {
     "targets": [
         {
-            "target_name": "calculate",
+            "target_name": "Predict_Addon",
             "sources": ["calculate.cpp"]
         }
     ]

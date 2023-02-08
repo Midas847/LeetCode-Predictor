@@ -1,35 +1,33 @@
 #include <node.h>
+#include <iostream>
+#include <vector>
+#include "helpers.h"
 
-namespace calculate
+using namespace v8;
+using namespace std;
+
+void PredictRatings(const FunctionCallbackInfo<Value> &args)
 {
-
-    using v8::FunctionCallbackInfo;
-    using v8::Isolate;
-    using v8::Local;
-    using v8::Number;
-    using v8::Object;
-    using v8::Value;
-
-    void Method(const FunctionCallbackInfo<Value> &args)
+    Isolate *isolate = args.GetIsolate();
+    Local<Context> context = isolate->GetCurrentContext();
+    vector<Rank> rankList = unpackRankList(isolate, args);
+    int THREAD_CNT = 1;
+    if (args.Length() > 1)
     {
-        Isolate *isolate = args.GetIsolate();
-
-        int i;
-        double x = 100.32462344, y = 200.333456533452;
-
-        for (i = 0; i < 1000000000; i++)
+        if (!args[1]->IsNumber())
         {
-            x += y;
+            isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong arguments. THREAD_CNT must be a Number.").ToLocalChecked()));
         }
-
-        auto total = Number::New(isolate, x);
-        args.GetReturnValue().Set(total);
+        THREAD_CNT = max(THREAD_CNT, int(args[1]->NumberValue(context).FromMaybe(1)));
     }
-
-    void Initialize(Local<Object> exports)
-    {
-        NODE_SET_METHOD(exports, "calc", Method);
-    }
-
-    NODE_MODULE(NODE_GYP_MODULE_NAME, Initialize);
+    Predict(rankList, THREAD_CNT);
+    Local<Array> predictedRatings = packRankList(rankList);
+    args.GetReturnValue().Set(predictedRatings);
 }
+
+void init(Local<Object> exports)
+{
+    NODE_SET_METHOD(exports, "predict", PredictRatings);
+}
+
+NODE_MODULE(predict_addon, init)
