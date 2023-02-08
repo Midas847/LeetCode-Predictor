@@ -28,7 +28,6 @@ router.get("/", async (req, res) => {
     }
       result.push(username_list);
     }
-   
 
     return res.status(200).json(result);
   } catch (err) {
