@@ -39,7 +39,6 @@ public:
                 else
                     delta = (delta * 2) / 9;
                 data[i].predictedRating = data[i].currentRating + delta;
-                // cout<<i+1<<"=> Expected Rank: "<<expectedRank<<" GMean: "<<GMean<<" expectedRating: "<<expectedRating<<" Delta: "<<delta<<" New rating: "<<data[i].predictedRating<<endl;
             }
         };
         int itemsPerThread = n / THREAD_CNT;

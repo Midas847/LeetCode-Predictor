@@ -5,13 +5,13 @@ const data = JSON.parse(fs.readFileSync(filePath));
 
 let predictedRatings = [];
 // Predictions with C++ Addon
-/*console.time("rating predictions (C++)");
+console.time("rating predictions (C++)");
 predictedRatings = addon.predict(data, 4);
 console.log(predictedRatings);
-console.timeEnd("rating predictions (C++)");*/
+console.timeEnd("rating predictions (C++)");
 
 // Predictions with JavaScript
-const predict = (data) => {
+/*const predict = (data) => {
   const getRatings = (GMean) => {
     let l = 1,
       r = 100000,
@@ -82,3 +82,4 @@ console.time("rating predictions (Js)");
 predictedRatings = predict(data);
 console.timeEnd("rating predictions (Js)");
 MSE(predictedRatings);
+*/
