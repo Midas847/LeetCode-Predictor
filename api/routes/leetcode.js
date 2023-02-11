@@ -4,13 +4,14 @@ const query = require("./Queries/contestInfo.js");
 const URL = "https://leetcode.com/contest/api/ranking/weekly-contest-121/";
 const fs = require('fs');
 const Bottleneck = require("bottleneck");
+const addon = require('../.././Rating_Algorithm//build/Release/Predict_Addon');
 
 let limiter = new Bottleneck({
-  maxConcurrent:5,
+  maxConcurrent:12,
   minTime: 50,
 });
 
-let ans=''
+
 router.get("/", async (req, res) => {
   try {
     
@@ -19,7 +20,7 @@ router.get("/", async (req, res) => {
     const total_pages = Math.ceil(num_of_users / 25); //Total number of pages
     //console.log(total_pages);
     let result = [];
-    for (let i = 1; i <= 3; i++) {
+    for (let i = 1; i <=30; i++) {
       const response_each = await axios.get(URL + "?pagination="+i+"&region=global");
       // console.log(response_each.data.total_rank);
       JSON.stringify(response_each.data.total_rank);
@@ -38,7 +39,7 @@ router.get("/", async (req, res) => {
             rating:response_rating.data.data.userContestRanking===null?1500:response_rating.data.data.userContestRanking.rating,
             rank:item.rank
         };        
-        ans+=JSON.stringify(obj)+',\n';
+      
         username_list.push(obj);
     }
       result.push(username_list);
@@ -48,9 +49,24 @@ router.get("/", async (req, res) => {
   //         fs.appendFileSync('contestData.json', JSON.stringify(obj) + '\n', 'utf-8');
   //     });
   // });
-    fs.appendFileSync('data.json', ans, 'utf-8');
+   
   
+    let predictedRatings = [];
+    // Flatten the result array
+    let data = [].concat.apply([], result);
 
+    // Predictions with C++ Addon    
+    console.time('C++ Addon');
+    predictedRatings = addon.predict(data, 4);
+    //console.log(predictedRatings);
+    console.timeEnd('C++ Addon');
+
+    //Store the predicted ratings in the result array
+    for(let i=0;i<data.length;i++){
+      data[i].predictedRating = predictedRatings[i];
+    }
+    fs.writeFileSync('contestData.json', JSON.stringify(data), 'utf-8');
+   
     
     
     return res.status(200).json(result);
