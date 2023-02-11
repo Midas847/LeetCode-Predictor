@@ -1,6 +1,6 @@
 const fs = require("fs");
 const addon = require("./build/Release/Predict_Addon");
-const filePath = "./test/weekly.json";
+const filePath = "./test/data.json";
 const data = JSON.parse(fs.readFileSync(filePath));
 
 let predictedRatings = [];
