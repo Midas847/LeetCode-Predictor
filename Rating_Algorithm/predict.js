@@ -8,6 +8,7 @@ let predictedRatings = [];
 console.time("rating predictions (C++)");
 predictedRatings = addon.predict(data, 4);
 console.log(predictedRatings);
+fs.writeFileSync("example.json", JSON.stringify(predictedRatings), "utf-8");
 console.timeEnd("rating predictions (C++)");
 
 // Predictions with JavaScript
