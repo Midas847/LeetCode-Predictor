@@ -49,16 +49,26 @@ router.get("/", async (req, res) => {
               const response_rating = await limiter.schedule(() =>
               axios.get(URL)
             );
-            console.log(response_rating.data.data);
-            
-                  // If response_rating.data.data.userProfilePublicProfile.profile.contestCount===0, then the user has not participated in any contest before. [Default rating is 1500]
+            if(response_rating.data.data.userProfilePublicProfile==null){
+              const obj = {
+                isFirstContest:false,
+                username: item.username,
+                rating: 1500,
+                rank: item.rank
+              }
+              username_list.push(obj);
+              
+            }
+            else{          
+                  
                   const obj = {
                     isFirstContest: response_rating.data.data.userProfilePublicProfile.profile.contestCount===0?true:false,
                     username: item.username,
-                    rating: response_rating.data.data.userProfilePublicProfile.profile.contestCount===1?1500:response_rating.data.data.userProfilePublicProfile.profile.ranking.currentRating,
+                    rating: response_rating.data.data.userProfilePublicProfile.profile.contestCount===1?1500:parseFloat(response_rating.data.data.userProfilePublicProfile.profile.ranking.currentRating),
                     rank: item.rank
                   }
                   username_list.push(obj);
+            }
             
         }
         else{
@@ -96,6 +106,7 @@ router.get("/", async (req, res) => {
     let predictedRatings = [];
     // Flatten the result array
     let data = [].concat.apply([], result);
+    //console.log(data);
 
     // Predictions with C++ Addon
     console.time("C++ Addon");
