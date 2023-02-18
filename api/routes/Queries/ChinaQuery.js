@@ -4,6 +4,7 @@ const URL=`https://leetcode-cn.com/graphql?query=query
     username,
     siteRanking,
     profile{
+      contestCount,
       ranking{
 	  currentRating
 	}

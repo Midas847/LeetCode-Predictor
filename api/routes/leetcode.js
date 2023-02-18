@@ -19,7 +19,7 @@ router.get("/", async (req, res) => {
     const total_pages = Math.ceil(num_of_users / 25); //Total number of pages
     //console.log(total_pages);
     let result = [];
-    for (let i = 1; i <= 30; i++) {
+    for (let i = 1; i <= 1; i++) {
       const response_each = await axios.get(
         URL + "?pagination=" + i + "&region=global"
       );
@@ -30,26 +30,60 @@ router.get("/", async (req, res) => {
       for (const item of response_each.data.total_rank) {
         //let user_name=item.username;
         //console.log(user_name);
-        const query_url = `https://leetcode.com/graphql?query=query{userContestRanking(username: "${item.username}"){rating attendedContestsCount}}`;
-        const response_rating = await limiter.schedule(() =>
-          axios.get(query_url)
-        );
+        //console.log(item.data_region);
+        //If the user is from China, then we need to use a different query to fetch the rating
+        if(item.data_region==="CN"){
+              const URL=`https://leetcode-cn.com/graphql?query=query
+              {    
+                userProfilePublicProfile(userSlug: "${item.username}") {
+                  username,
+                  siteRanking,
+                  profile{
+                    contestCount,
+                    ranking{
+                        currentRating
+                      }
+                  }
+                }  
+              }`
+              const response_rating = await limiter.schedule(() =>
+              axios.get(URL)
+            );
+            console.log(response_rating.data.data);
+            
+                  // If response_rating.data.data.userProfilePublicProfile.profile.contestCount===0, then the user has not participated in any contest before. [Default rating is 1500]
+                  const obj = {
+                    isFirstContest: response_rating.data.data.userProfilePublicProfile.profile.contestCount===0?true:false,
+                    username: item.username,
+                    rating: response_rating.data.data.userProfilePublicProfile.profile.contestCount===1?1500:response_rating.data.data.userProfilePublicProfile.profile.ranking.currentRating,
+                    rank: item.rank
+                  }
+                  username_list.push(obj);
+            
+        }
+        else{
+            //User is from any other region
+                  const query_url = `https://leetcode.com/graphql?query=query{userContestRanking(username: "${item.username}"){rating attendedContestsCount}}`;
+                  const response_rating = await limiter.schedule(() =>
+                    axios.get(query_url)
+                  );
 
-        // If response_rating.data.data.userContestRanking===null, then the user has not participated in any contest before. [Default rating is 1500]
-        const obj = {
-          isFirstContest:
-            response_rating.data.data.userContestRanking === null
-              ? true
-              : false,
-          username: item.username,
-          rating:
-            response_rating.data.data.userContestRanking === null
-              ? 1500
-              : response_rating.data.data.userContestRanking.rating,
-          rank: item.rank,
-        };
+                  // If response_rating.data.data.userContestRanking===null, then the user has not participated in any contest before. [Default rating is 1500]
+                  const obj = {
+                    isFirstContest:
+                      response_rating.data.data.userContestRanking === null
+                        ? true
+                        : false,
+                    username: item.username,
+                    rating:
+                      response_rating.data.data.userContestRanking === null
+                        ? 1500
+                        : response_rating.data.data.userContestRanking.rating,
+                    rank: item.rank,
+                  };
 
-        username_list.push(obj);
+                  username_list.push(obj);
+          }
       }
       result.push(username_list);
     }
@@ -73,7 +107,7 @@ router.get("/", async (req, res) => {
     for (let i = 0; i < data.length; i++) {
       data[i].predictedRating = predictedRatings[i];
     }
-    fs.writeFileSync("contestData.json", JSON.stringify(data), "utf-8");
+    //fs.writeFileSync("contestData.json", JSON.stringify(data), "utf-8");
 
     return res.status(200).json(result);
   } catch (err) {
