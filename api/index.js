@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const leetcode = require("./routes/leetcode");
+const leetcode = require("./routes/leetcode2");
 app.use(cors());
 app.use(express.json());
 

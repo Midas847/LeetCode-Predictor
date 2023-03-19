@@ -7,9 +7,10 @@ const fs = require("fs");
 const Bottleneck = require("bottleneck");
 const addon = require("../.././Rating_Algorithm//build/Release/Predict_Addon");
 
-let limiter = new Bottleneck({
-  maxConcurrent: 12,
+let limiter = new Bottleneck({  
   minTime: 50,
+  maxConcurrent: 5,
+
 });
 
 router.get("/", async (req, res) => {
@@ -19,7 +20,7 @@ router.get("/", async (req, res) => {
     const total_pages = Math.ceil(num_of_users / 25); //Total number of pages
     //console.log(total_pages);
     let result = [];
-    for (let i = 1; i <= 1; i++) {
+    for (let i = 1; i <= 2; i++) {
       const response_each = await axios.get(
         URL + "?pagination=" + i + "&region=global"
       );
@@ -33,7 +34,7 @@ router.get("/", async (req, res) => {
         //console.log(item.data_region);
         //If the user is from China, then we need to use a different query to fetch the rating
         if(item.data_region==="CN"){
-              const URL=`https://leetcode-cn.com/graphql?query=query
+              const query_url_CN=`https://leetcode-cn.com/graphql?query=query
               {    
                 userProfilePublicProfile(userSlug: "${item.username}") {
                   username,
@@ -47,7 +48,7 @@ router.get("/", async (req, res) => {
                 }  
               }`
               const response_rating = await limiter.schedule(() =>
-              axios.get(URL)
+              axios.get( query_url_CN)
             );
             if(response_rating.data.data.userProfilePublicProfile==null){
               const obj = {
