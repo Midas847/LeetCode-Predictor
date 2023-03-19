@@ -67,7 +67,7 @@ router.get("/", async (req, res) => {
         const total_pages = Math.ceil(num_of_users / 25); //Total number of pages        
         let result = [];
         console.time("Time Taken");
-        for (let i = 1; i <= 3; i++) {
+        for (let i = 1; i <= 20; i++) {
             const response_each = await limiter.schedule(() => axios.get(URL + "?pagination=" + i + "&region=global"));
             JSON.stringify(response_each.data.total_rank);           
             for (const item of response_each.data.total_rank) {                
@@ -82,10 +82,11 @@ router.get("/", async (req, res) => {
                       result.push(obj);
             }          
         }
-        console.timeEnd("Time Taken");
+        
         
         await fetchPreviousRating(result);
-        return res.status(200).json(result);
+        console.timeEnd("Time Taken");
+         return res.status(200).json(result);
     }
     catch(err){
         console.log(err);
