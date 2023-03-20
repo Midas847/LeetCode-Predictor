@@ -9,11 +9,12 @@ const App = () => {
       .then((res) => {
         setData(res.data);
         //console.log(JSON.stringify(res.data));
+        
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  },[]);
   return (
     <div>
       {data.length === 0 ? (

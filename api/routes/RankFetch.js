@@ -7,21 +7,28 @@ const fs = require("fs");
 const Bottleneck = require("bottleneck");
 
 
-const calc = async(result) => {
+let limiter = new Bottleneck({  
+  minTime: 50,
+  maxConcurrent: 1,
+
+});
+
+
+const calc1 = async(result) => {
     try{
         const response = await axios.get(URL);
         const num_of_users = response.data.user_num; //Total Number of users taking part in the contest
         const total_pages = Math.ceil(num_of_users / 25); //Total number of pages        
         
        
-        for (let i = 1; i <= 2; i++) {
-            const response_each = await  axios.get(URL + "?pagination=" + i + "&region=global");
+        for (let i = 1; i <= 10; i++) {
+            const response_each = await  limiter.schedule(() => axios.get(URL + "?pagination=" + i + "&region=all-contestants"));
             JSON.stringify(response_each.data.total_rank);           
             for (const item of response_each.data.total_rank) {                
                     const obj = {
                         isFirstContest: false,//Default
                         username: item.username,
-                        rating:1500,
+                        rating:1500,//Default
                         rank: item.rank,
                         region : item.data_region,
                         predictedRating: 0
@@ -37,4 +44,4 @@ const calc = async(result) => {
     }
 }
 
-module.exports = calc;
+module.exports = calc1;
