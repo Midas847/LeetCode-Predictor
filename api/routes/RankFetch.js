@@ -21,7 +21,7 @@ const calc1 = async(result) => {
         const total_pages = Math.ceil(num_of_users / 25); //Total number of pages        
         
        
-        for (let i = 1; i <= 10; i++) {
+        for (let i = 1; i <= 100; i++) {
             const response_each = await  limiter.schedule(() => axios.get(URL + "?pagination=" + i + "&region=all-contestants"));
             JSON.stringify(response_each.data.total_rank);           
             for (const item of response_each.data.total_rank) {                
@@ -36,11 +36,10 @@ const calc1 = async(result) => {
                       result.push(obj);
             }          
         }
-        
-       
+        console.log("All Rank Fetched");
     }
     catch(err){
-        console.log(err);    
+        console.log("Error in Rank Fetching");    
     }
 }
 

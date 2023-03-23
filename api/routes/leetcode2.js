@@ -14,13 +14,13 @@ const RatingPredict = require("./RatingPredict.js");
 router.get("/",  async (req, res) => {
       try{
         let result=[];
-        
+        console.log("Fetching Contest Data");
         console.time("Time Taken : ");
         await RankFetch(result);
         let x=await RatingFetch(result);
         await RatingPredict(x);
-        console.log(x);
-        await res.send(result);
+        //console.log(x);
+       // await res.send(result);
         console.timeEnd("Time Taken : ");
        
       }

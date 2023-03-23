@@ -9,12 +9,12 @@ const result = require("./RankFetch.js");
 const Promises = require("bluebird");
 const limiter2 = new Bottleneck({
     maxConcurrent: 1,
-    minTime: 800,
+    minTime: 100,
     
 });
-
+ 
 const calc2 = (result) => {
-    let res = [];
+   
    const x=Promises.all(result.map(async (item) => {
         
             let username= item.username;
@@ -60,12 +60,11 @@ const calc2 = (result) => {
                 else{
                     let i=item.rank;
                     item.rating = parseFloat(response_rating.data.data.userContestRanking.rating);
-                    //console.log(i+" "+username+" "+response_rating.data.data.userContestRanking.rating);
+                  //  console.log(i+" "+username+" "+response_rating.data.data.userContestRanking.rating);
                 }
             }
                 
-           // res.push(item);
-           //console.log(res[res.length-1])
+           
            return item;
     }));
    return x;
