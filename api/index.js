@@ -9,13 +9,12 @@ dotenv.config();
 app.use(express.json());
 
 mongoose
-  .connect(process.env.MONGODB_URL)
-  .then(() => {
-    console.log("Database connection successful");
+  .connect(process.env.MONGODB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
   })
-  .catch((err) => {
-    console.log(err);
-  });
+  .then(() => console.log("Connected to MongoDB..."))
+  .catch((error) => console.log(error));
 
 app.use("/api/routes/leetcode", leetcode);
 

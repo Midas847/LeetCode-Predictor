@@ -21,6 +21,7 @@ router.get("/", async (req, res) => {
     //console.log(x);
     // await res.send(result);
     // console.timeEnd("Time Taken : ");
+    return res.status(200).json("Welcome to homepage!");
   } catch (err) {
     console.log(err);
   }
@@ -30,9 +31,9 @@ router.get("/rankfetch", async (req, res) => {
   try {
     // console.log("Fetching Contest Data");
     // console.time("Time Taken for Rank Fetch: ");
-    await RankFetch(result);
+    const response = await RankFetch();
     // console.timeEnd("Time Taken for Rank Fetch: ");
-    return res.status(200).json("Ranks fetched")
+    return res.status(200).json(response);
   } catch (err) {
     console.log(err);
   }
@@ -40,24 +41,17 @@ router.get("/rankfetch", async (req, res) => {
 //Route to fetch previous rating of each user that participated in the contest
 router.get("/ratingfetch", async (req, res) => {
   try {
-    console.log(result.length);
-    console.log("Fetching Previous Rating");
-    console.time("Time Taken  for Rating Fetch: ");
-    await RatingFetch(result);
-    // //fs.writeFileSync("result.json", JSON.stringify(result));
-    // console.timeEnd("Time Taken for Rating Fetch: ");
-    // console.log("Rating Fetched");
+    const response = await RatingFetch();
+    console.log(response);
+    return res.status(200).json(response);
   } catch (err) {
     console.log(err);
   }
 });
 router.get("/ratingpredict", async (req, res) => {
   try {
-    console.log("Predicting New Rating");
-    console.time("Time Taken for Rating Prediction: ");
-    await RatingPredict(result);
-    console.timeEnd("Time Taken for Rating Prediction: ");
-    await res.send(result);
+    const response = await RatingPredict();
+    return res.status(200).json(response);
   } catch (err) {
     console.log(err);
   }
