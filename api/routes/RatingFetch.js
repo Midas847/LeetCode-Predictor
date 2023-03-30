@@ -9,7 +9,7 @@ const Bottleneck = require("bottleneck");
 const result = require("./RankFetch.js");
 const Promises = require("bluebird");
 const limiter2 = new Bottleneck({
-  maxConcurrent: 10,
+  maxConcurrent: 5,
   minTime: 40,
 });
 
@@ -18,6 +18,7 @@ const RatingFetch = async () => {
   try {
     const respon = await User.find({}, { _id: 0 });
     for (const item of respon) {
+      if (item === null) continue;
       let username = item.username;
       let user_region = item.region;
       if (user_region === "CN") {
@@ -57,7 +58,9 @@ const RatingFetch = async () => {
         const response_rating = await limiter2.schedule(() =>
           axios.get(query_url)
         );
-        if (response_rating.data.data.attendedContestsCount == 1) {
+        if (response_rating.data.data.userContestRanking == null) {
+          continue;
+        } else if (response_rating.data.data.attendedContestsCount == 1) {
           item.isFirstContest = true;
         } else {
           item.rating = parseFloat(

@@ -30,7 +30,7 @@ const RatingPredict = async () => {
 
     const savedUsers = await predicteduser.insertMany(respon);
     console.log(savedUsers);
-    return result;
+    return savedUsers;
   } catch (error) {
     console.log(error);
   }

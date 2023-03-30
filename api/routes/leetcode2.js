@@ -9,6 +9,7 @@ const addon = require("../.././Rating_Algorithm//build/Release/Predict_Addon");
 const RankFetch = require("./RankFetch.js");
 const RatingFetch = require("./RatingFetch.js");
 const RatingPredict = require("./RatingPredict.js");
+const predictedUser = require("../models/predictedUser");
 
 let result = [];
 router.get("/", async (req, res) => {
@@ -28,11 +29,12 @@ router.get("/", async (req, res) => {
 });
 //Route to fetch contest data
 router.get("/rankfetch", async (req, res) => {
+  console.log("Fetching Contest Data");
   try {
-    // console.log("Fetching Contest Data");
     // console.time("Time Taken for Rank Fetch: ");
+    console.time("Time Taken for Rank Fetch: ");
     const response = await RankFetch();
-    // console.timeEnd("Time Taken for Rank Fetch: ");
+    console.timeEnd("Time Taken for Rank Fetch: ");
     return res.status(200).json(response);
   } catch (err) {
     console.log(err);
@@ -41,8 +43,9 @@ router.get("/rankfetch", async (req, res) => {
 //Route to fetch previous rating of each user that participated in the contest
 router.get("/ratingfetch", async (req, res) => {
   try {
+    console.time("Time Taken for Rating Fetch: ");
     const response = await RatingFetch();
-    console.log(response);
+    console.timeEnd("Time Taken for Rating Fetch: ");
     return res.status(200).json(response);
   } catch (err) {
     console.log(err);
@@ -50,7 +53,18 @@ router.get("/ratingfetch", async (req, res) => {
 });
 router.get("/ratingpredict", async (req, res) => {
   try {
+    console.time("Time Taken for Rating Predict: ");
     const response = await RatingPredict();
+    console.timeEnd("Time Taken for Rating Predict: ");
+    return res.status(200).json(response);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.get("/getData", async (req, res) => {
+  try {
+    const response = await predictedUser.find().sort({ _id: 1 });
     return res.status(200).json(response);
   } catch (err) {
     console.log(err);

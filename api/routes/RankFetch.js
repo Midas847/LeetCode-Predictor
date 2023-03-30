@@ -26,7 +26,7 @@ const calc1 = async () => {
     const num_of_users = response.data.user_num; //Total Number of users taking part in the contest
     const total_pages = Math.ceil(num_of_users / 25); //Total number of pages
     let users = [];
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= total_pages; i++) {
       const response_each = await limiter.schedule(() =>
         axios.get(URL + "?pagination=" + i + "&region=all-contestants")
       );
