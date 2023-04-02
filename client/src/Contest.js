@@ -30,9 +30,12 @@ const Contest = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3500/api/routes/leetcode/getData")
+      .get(
+        "http://localhost:3500/api/routes/leetcode/getContestRankings?contestId=biweekly-contest-98"
+      )
       .then((res) => {
-        setData(res.data);
+        setData(res.data[0].rankings);
+        console.log(res);
       })
       .catch((error) => {
         console.log(error);

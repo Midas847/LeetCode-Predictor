@@ -7,6 +7,7 @@ const fs = require("fs");
 const Bottleneck = require("bottleneck");
 const User = require("../models/updatedUser");
 const predicteduser = require("../models/predictedUser");
+const Contest = require("../models/Contest");
 
 const RatingPredict = async () => {
   let predictedRatings = [];
@@ -25,11 +26,18 @@ const RatingPredict = async () => {
     predictedRatings = addon.predict(respon, 6);
     for (obj of respon) {
       obj.predictedRating = predictedRatings.shift();
-      console.log(obj);
     }
 
     const savedUsers = await predicteduser.insertMany(respon);
-    console.log(savedUsers);
+    const contest = await new Contest({
+      contestId: 1,
+      contestName: "biweekly-contest-98",
+      startTime: 1600000000,
+      rankings: savedUsers,
+      ratings_predicted: true,
+      duration: 3600,
+    }).save();
+    console.log(contest);
     return savedUsers;
   } catch (error) {
     console.log(error);

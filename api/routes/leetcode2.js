@@ -10,6 +10,15 @@ const RankFetch = require("./RankFetch.js");
 const RatingFetch = require("./RatingFetch.js");
 const RatingPredict = require("./RatingPredict.js");
 const predictedUser = require("../models/predictedUser");
+const Contest = require("../models/Contest");
+const contest_query_url = `https://leetcode.com/graphql?query=query{
+  allContests
+  {
+    title,
+    startTime,
+    duration
+  }
+}`;
 
 let result = [];
 router.get("/", async (req, res) => {
@@ -70,4 +79,25 @@ router.get("/getData", async (req, res) => {
     console.log(err);
   }
 });
+
+router.get("/getContestData", async (req, res) => {
+  try {
+    const response = await axios.get(contest_query_url);
+    return res.status(200).json(response.data.data.allContests);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.get("/getContestRankings", async (req, res) => {
+  try {
+    const contestId = req.query.contestId;
+    console.log(req.query);
+    const response = await Contest.find({ contestName: contestId });
+    return res.status(200).json(response);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 module.exports = router;
