@@ -13,10 +13,11 @@ const limiter2 = new Bottleneck({
   minTime: 40,
 });
 
-const RatingFetch = async () => {
+const RatingFetch = async (respon) => {
   let result = [];
+  let response = [];
   try {
-    const respon = await User.find({}, { _id: 0 });
+    // const respon = await User.find({}, { _id: 0 });
     for (const item of respon) {
       if (item === null) continue;
       let username = item.username;
@@ -69,12 +70,12 @@ const RatingFetch = async () => {
         }
       }
       console.log(item);
-      result.push(item);
+      response.push(item);
     }
-    const savedUsers = await updatedUser.insertMany(result);
-    console.log(savedUsers);
+    // const savedUsers = await updatedUser.insertMany(result);
+    // console.log(savedUsers);
     console.log("All ratings fetched!");
-    return result;
+    return response;
   } catch (error) {
     console.log("Error in Rating Fetching");
     console.log(error);

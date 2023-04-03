@@ -2,7 +2,7 @@ const { default: axios } = require("axios");
 const router = require("express").Router();
 const query = require("./Queries/contestInfo.js");
 //const URL = "https://leetcode.com/contest/api/ranking/weekly-contest-121/";
-const URL = "https://leetcode.com/contest/api/ranking/biweekly-contest-98/";
+const URL = "https://leetcode.com/contest/api/ranking/biweekly-contest-339/";
 const fs = require("fs");
 const Bottleneck = require("bottleneck");
 const addon = require("../.././Rating_Algorithm//build/Release/Predict_Addon");
@@ -43,8 +43,10 @@ router.get("/rankfetch", async (req, res) => {
     // console.time("Time Taken for Rank Fetch: ");
     console.time("Time Taken for Rank Fetch: ");
     const response = await RankFetch();
+    const result = await RatingFetch(response);
+    const predictions = await RatingPredict(result);
     console.timeEnd("Time Taken for Rank Fetch: ");
-    return res.status(200).json(response);
+    return res.status(200).json(predictions);
   } catch (err) {
     console.log(err);
   }

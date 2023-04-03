@@ -26,32 +26,33 @@ const calc1 = async () => {
     const num_of_users = response.data.user_num; //Total Number of users taking part in the contest
     const total_pages = Math.ceil(num_of_users / 25); //Total number of pages
     let users = [];
-    for (let i = 1; i <= total_pages; i++) {
+    for (let i = 1; i <= 2; i++) {
       const response_each = await limiter.schedule(() =>
         axios.get(URL + "?pagination=" + i + "&region=all-contestants")
       );
       JSON.stringify(response_each.data.total_rank);
       for (const item of response_each.data.total_rank) {
-        // Inserting into db
-        // const savedUser = await new User({
+        // const obj = {
         //   username: item.username,
         //   rank: item.rank,
         //   region: item.data_region,
-        // }).save();
+        // };
+
         const obj = {
+          isFirstContest: false,
           username: item.username,
+          rating: 1500,
           rank: item.rank,
           region: item.data_region,
+          predictedRating: 0,
         };
-        // console.log(savedUser);
-        // result.push(savedUser);
-        // console.log(obj);
+
         users.push(obj);
       }
     }
     cache.set(cacheKey, users);
     const savedUsers = await User.insertMany(users);
-    console.log(savedUsers);
+    // console.log(savedUsers);
     console.log("All Rank Fetched");
     return users;
   } catch (err) {
