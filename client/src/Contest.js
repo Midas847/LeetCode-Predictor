@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useParams } from "react-router";
 
 const Contest = () => {
   const [data, setData] = useState([]);
@@ -11,7 +12,9 @@ const Contest = () => {
   const records = data.slice(firstIndex, lastIndex);
   const npage = Math.ceil(data.length / recordsPerPage);
   const numbers = [...Array(npage + 1).keys()].slice(1);
+  const contestId = useParams().id.toLowerCase().replace(/ /g, "-");
 
+  console.log(contestId);
   const prevPage = () => {
     if (currentPage !== firstIndex) {
       setCurrentPage(currentPage - 1);
@@ -31,7 +34,7 @@ const Contest = () => {
   useEffect(() => {
     axios
       .get(
-        "http://localhost:3500/api/routes/leetcode/getContestRankings?contestId=biweekly-contest-98"
+        `http://localhost:3500/api/routes/leetcode/getContestRankings?contestId=${contestId}`
       )
       .then((res) => {
         setData(res.data[0].rankings);
@@ -40,7 +43,7 @@ const Contest = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [contestId]);
   return (
     <>
       {data.length === 0 ? (

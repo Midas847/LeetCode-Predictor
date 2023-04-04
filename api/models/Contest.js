@@ -3,7 +3,6 @@ const predictedRatings = require("./predictedUser");
 
 const ContestSchema = new mongoose.Schema(
   {
-    contestId: { type: Number },
     contestName: { type: String },
     startTime: { type: Number },
     rankings: [predictedRatings.schema],

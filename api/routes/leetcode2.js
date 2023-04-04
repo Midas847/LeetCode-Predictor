@@ -2,7 +2,7 @@ const { default: axios } = require("axios");
 const router = require("express").Router();
 const query = require("./Queries/contestInfo.js");
 //const URL = "https://leetcode.com/contest/api/ranking/weekly-contest-121/";
-const URL = "https://leetcode.com/contest/api/ranking/biweekly-contest-339/";
+const URL = "https://leetcode.com/contest/api/ranking/biweekly-contest-102/";
 const fs = require("fs");
 const Bottleneck = require("bottleneck");
 const addon = require("../.././Rating_Algorithm//build/Release/Predict_Addon");
@@ -38,13 +38,15 @@ router.get("/", async (req, res) => {
 });
 //Route to fetch contest data
 router.get("/rankfetch", async (req, res) => {
+  const URL = req.query.contestId;
   console.log("Fetching Contest Data");
   try {
-    // console.time("Time Taken for Rank Fetch: ");
     console.time("Time Taken for Rank Fetch: ");
-    const response = await RankFetch();
+    const response = await RankFetch(
+      `https://leetcode.com/contest/api/ranking/${URL}/`
+    );
     const result = await RatingFetch(response);
-    const predictions = await RatingPredict(result);
+    const predictions = await RatingPredict(result, URL);
     console.timeEnd("Time Taken for Rank Fetch: ");
     return res.status(200).json(predictions);
   } catch (err) {
@@ -98,7 +100,7 @@ router.get("/getContestRankings", async (req, res) => {
     const response = await Contest.find({ contestName: contestId });
     return res.status(200).json(response);
   } catch (err) {
-    console.log(err);
+    return res.status(400).json("Error Occured");
   }
 });
 
