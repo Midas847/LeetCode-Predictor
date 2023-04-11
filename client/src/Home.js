@@ -51,9 +51,10 @@ const Home = () => {
       ) : (
         <div className="">
           <Navbar />
-          <div className="p[50px]">
-            <table className="min-w-full text-center text-sm font-light">
-              <thead className="border-b bg-neutral-50 font-medium dark:border-neutral-500 dark:text-neutral-800">
+          <div className="p-[10px]">
+            <table className="min-w-full text-center text-sm shadow-md rounded-lg">
+              {/* <thead className="border-b bg-neutral-100 font-medium text-[16px]  dark:border-neutral-500 dark:text-neutral-800"> */}
+              <thead className="border-b bg-gray-800 text-white font-medium text-[16px]  dark:border-neutral-500 dark:text-neutral-800">
                 <tr>
                   <th scope="col" className=" px-4 py-4">
                     #
@@ -80,26 +81,30 @@ const Home = () => {
                   return (
                     <tr
                       key={index}
-                      className="border-b dark:border-neutral-500"
+                      className="text-[16px] border-b dark:border-neutral-500"
                     >
                       <td className="whitespace-nowrap  px-6 py-4 font-medium">
                         {index + 1}
                       </td>
                       <td className="whitespace-nowrap  px-6 py-4 text-[16px] cursor-pointer ">
                         <p
-                          className="underline hover:text-black"
+                          className="text-blue-600 underline hover:text-blue-800"
                           onClick={() => navigate(`/contest/${contest.title}`)}
                         >
                           {contest.title}
                         </p>
                       </td>
-                      <td className="whitespace-nowrap  px-6 py-4">
-                        {moment(contest.startTime * 1000).format()}
+                      <td className="whitespace-nowrap  px-6 py-4 ">
+                        {moment(contest.startTime * 1000).format(
+                          "DD/MM/yyyy HH:MM:SS"
+                        )}
                       </td>
                       <td className="whitespace-nowrap  px-6 py-4">90 min</td>
                       <td className="whitespace-nowrap  px-6 py-4">No</td>
                       <td className="whitespace-nowrap  px-6 py-4">
-                        {moment(contest.startTime * 1000).format()}
+                        {moment(contest.startTime * 1000).format(
+                          "DD/MM/yyyy HH:MM:SS"
+                        )}
                       </td>
                     </tr>
                   );
@@ -114,11 +119,11 @@ const Home = () => {
               <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
                 Showing{" "}
                 <span class="font-semibold text-gray-900 dark:text-white">
-                  1-10
+                  1-25
                 </span>{" "}
                 of{" "}
                 <span class="font-semibold text-gray-900 dark:text-white">
-                  1000
+                  {contests.length}
                 </span>
               </span>
 
@@ -129,6 +134,7 @@ const Home = () => {
                     <button
                       class="block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                       onClick={prevPage}
+                      disabled={currentPage === 1}
                     >
                       <span class="sr-only">Previous</span>
                       <svg
@@ -168,6 +174,7 @@ const Home = () => {
                   <button
                     class="block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                     onClick={nextPage}
+                    disabled={currentPage === npage - 5}
                   >
                     <span class="sr-only">Next</span>
                     <svg

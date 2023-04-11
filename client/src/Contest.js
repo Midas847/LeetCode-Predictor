@@ -58,7 +58,10 @@ const Contest = () => {
               <label for="table-search" class="sr-only">
                 Search
               </label>
-              <div class="relative mt-1 cursor-pointer">
+              <div
+                class="relative mt-1 cursor-pointer"
+                onClick={() => console.log(search)}
+              >
                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                   <svg
                     class="w-5 h-5 text-gray-500 dark:text-gray-400"
@@ -84,8 +87,9 @@ const Contest = () => {
               </div>
             </div>
 
-            <table className="min-w-full text-center text-sm font-light shadow-md rounded-lg">
-              <thead className="border-b bg-neutral-50 font-medium dark:border-neutral-500 dark:text-neutral-800">
+            <table className="min-w-full text-center text-sm shadow-md rounded ">
+              {/* <thead className="border-b bg-neutral-50 font-medium dark:border-neutral-500 dark:text-neutral-800"> */}
+              <thead className="border-b bg-gray-800 text-white font-medium  dark:border-neutral-500 dark:text-neutral-800">
                 <tr>
                   <th scope="col" className=" px-4 py-4">
                     Rank
@@ -150,11 +154,11 @@ const Contest = () => {
               <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
                 Showing{" "}
                 <span class="font-semibold text-gray-900 dark:text-white">
-                  1-10
+                  {firstIndex}-{lastIndex}
                 </span>{" "}
                 of{" "}
                 <span class="font-semibold text-gray-900 dark:text-white">
-                  1000
+                  {data.length}
                 </span>
               </span>
 
@@ -165,6 +169,7 @@ const Contest = () => {
                     <button
                       class="block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                       onClick={prevPage}
+                      disabled={currentPage === 1}
                     >
                       <span class="sr-only">Previous</span>
                       <svg
@@ -204,6 +209,7 @@ const Contest = () => {
                   <button
                     class="block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                     onClick={nextPage}
+                    disabled={currentPage === npage - 5}
                   >
                     <span class="sr-only">Next</span>
                     <svg
