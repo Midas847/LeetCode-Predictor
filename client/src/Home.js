@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import moment from "moment";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
+import { InfinitySpin } from "react-loader-spinner";
+import Footer from "./Footer";
 
 const Home = () => {
   const [contests, setcontests] = useState([]);
@@ -47,7 +49,9 @@ const Home = () => {
   return (
     <>
       {contests.length === 0 ? (
-        <div>Loading</div>
+        <div className="flex justify-center items-center mt-[300px]">
+          <InfinitySpin width="200" color="#243c5a" />
+        </div>
       ) : (
         <div className="">
           <Navbar />
@@ -195,6 +199,7 @@ const Home = () => {
               </ul>
             </nav>
           </div>
+          <Footer />
         </div>
       )}
     </>
