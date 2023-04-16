@@ -94,13 +94,39 @@ router.get("/getContestData", async (req, res) => {
 });
 
 router.get("/getContestRankings", async (req, res) => {
+  const contestId = req.query.contestId;
+  const page = parseInt(req.query.page);
+  const limit = parseInt(req.query.limit);
+
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+
+  const results = {};
+
+  // if (endIndex < (await Contest.countDocuments().exec())) {
+  //   results.next = {
+  //     page: page + 1,
+  //     limit: limit,
+  //   };
+  // }
+
+  // if (startIndex > 0) {
+  //   results.previous = {
+  //     page: page - 1,
+  //     limit: limit,
+  //   };
+  // }
+  console.log(results);
   try {
-    const contestId = req.query.contestId;
     console.log(req.query);
-    const response = await Contest.find({ contestName: contestId });
-    return res.status(200).json(response);
+    // const response = await Contest.find({ contestName: contestId });
+    results = await Contest.find({ contestName: contestId },{rankings: 1})
+      .limit(limit)
+      .skip(startIndex)
+      .exec();
+    return res.status(200).json(results);
   } catch (err) {
-    return res.status(400).json("Error Occured");
+    return res.status(400).json(err);
   }
 });
 
