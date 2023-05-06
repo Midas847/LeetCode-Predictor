@@ -102,29 +102,15 @@ router.get("/getContestRankings", async (req, res) => {
   const endIndex = page * limit;
 
   const results = {};
-
-  // if (endIndex < (await Contest.countDocuments().exec())) {
-  //   results.next = {
-  //     page: page + 1,
-  //     limit: limit,
-  //   };
-  // }
-
-  // if (startIndex > 0) {
-  //   results.previous = {
-  //     page: page - 1,
-  //     limit: limit,
-  //   };
-  // }
   console.log(results);
   try {
     console.log(req.query);
     // const response = await Contest.find({ contestName: contestId });
-    results = await Contest.find({ contestName: contestId },{rankings: 1})
-      .limit(limit)
-      .skip(startIndex)
-      .exec();
-    return res.status(200).json(results);
+    const response = await Contest.find(
+      { contestName: contestId },
+      { rankings: { $slice: [startIndex, limit] } }
+    );
+    return res.status(200).json(response);
   } catch (err) {
     return res.status(400).json(err);
   }

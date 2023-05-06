@@ -32,12 +32,6 @@ const calc1 = async (URL) => {
       );
       JSON.stringify(response_each.data.total_rank);
       for (const item of response_each.data.total_rank) {
-        // const obj = {
-        //   username: item.username,
-        //   rank: item.rank,
-        //   region: item.data_region,
-        // };
-
         const obj = {
           isFirstContest: false,
           username: item.username,
