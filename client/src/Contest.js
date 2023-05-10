@@ -2,14 +2,12 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import Navbar from "./Navbar";
 import { InfinitySpin } from "react-loader-spinner";
-import Footer from "./Footer";
 import Pagination from "./Pagination";
 
 const Contest = () => {
   const [data, setData] = useState([]);
-  const [search, setsearch] = useState("");
+
   const pageNumberLimit = 5;
   const [currentPage, setCurrentPage] = useState(1);
   const [maxPageLimit, setMaxPageLimit] = useState(5);
@@ -33,9 +31,9 @@ const Contest = () => {
       .catch((error) => {
         console.log(error);
       });
-    console.log("minPageLimit" + minPageLimit);
-    console.log("maxPageLimit" + maxPageLimit);
-    console.log("currentPage" + currentPage);
+    // console.log("minPageLimit" + minPageLimit);
+    // console.log("maxPageLimit" + maxPageLimit);
+    // console.log("currentPage" + currentPage);
   }, [contestId, currentPage]);
 
   const onPageChange = (pageNumber) => {
@@ -62,6 +60,7 @@ const Contest = () => {
     currentPage,
     maxPageLimit,
     minPageLimit,
+    contestId,
     response: data,
   };
 

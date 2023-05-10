@@ -1,8 +1,6 @@
 const { default: axios } = require("axios");
 const router = require("express").Router();
 const query = require("./Queries/contestInfo.js");
-//const URL = "https://leetcode.com/contest/api/ranking/weekly-contest-121/";
-const URL = "https://leetcode.com/contest/api/ranking/biweekly-contest-102/";
 const fs = require("fs");
 const Bottleneck = require("bottleneck");
 const addon = require("../.././Rating_Algorithm//build/Release/Predict_Addon");
@@ -85,9 +83,36 @@ router.get("/getData", async (req, res) => {
 });
 
 router.get("/getContestData", async (req, res) => {
+  const page = parseInt(req.query.page);
+  const limit = parseInt(req.query.limit);
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
   try {
     const response = await axios.get(contest_query_url);
-    return res.status(200).json(response.data.data.allContests);
+    const final = response.data.data.allContests.slice(startIndex, endIndex);
+    // console.log(final);
+    return res.status(200).json(final);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.get("/getUser", async (req, res) => {
+  const contestId = req.query.contestId;
+  const user = req.query.userId;
+  console.log(user + contestId);
+  try {
+    const contest = await Contest.findOne({
+      contestName: contestId,
+      rankings: { $elemMatch: { username: user } },
+    });
+    console.log(contest);
+    if (contest == null) {
+      return res.status(200).json("User not found");
+    }
+    const ranking = contest.rankings.find((r) => r.username === user);
+    console.log(ranking);
+    return res.status(200).json(ranking);
   } catch (err) {
     console.log(err);
   }
@@ -105,7 +130,7 @@ router.get("/getContestRankings", async (req, res) => {
   console.log(results);
   try {
     console.log(req.query);
-    // const response = await Contest.find({ contestName: contestId });
+
     const response = await Contest.find(
       { contestName: contestId },
       { rankings: { $slice: [startIndex, limit] } }

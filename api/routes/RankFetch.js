@@ -9,7 +9,7 @@ const cache = new NodeCache();
 
 let limiter = new Bottleneck({
   minTime: 40,
-  maxConcurrent: 10,
+  maxConcurrent: 5,
 });
 
 const calc1 = async (URL) => {
@@ -28,7 +28,7 @@ const calc1 = async (URL) => {
     let users = [];
     for (let i = 1; i <= total_pages; i++) {
       const response_each = await limiter.schedule(() =>
-        axios.get(URL + "?pagination=" + i + "&region=all-contestants")
+        axios.get(URL + "?pagination=" + i)
       );
       JSON.stringify(response_each.data.total_rank);
       for (const item of response_each.data.total_rank) {

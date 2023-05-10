@@ -8,9 +8,17 @@ const fs = require("fs");
 const Bottleneck = require("bottleneck");
 const result = require("./RankFetch.js");
 const Promises = require("bluebird");
+const axiosRetry = require("axios-retry");
+
 const limiter2 = new Bottleneck({
   maxConcurrent: 5,
-  minTime: 40,
+  minTime: 60,
+});
+
+axiosRetry(axios, {
+  retries: 60,
+  retryDelay: axiosRetry.exponentialDelay,
+  shouldRetry: (error) => true, // retry on any error
 });
 
 const RatingFetch = async (respon) => {
@@ -47,7 +55,7 @@ const RatingFetch = async (respon) => {
               : false),
             (item.rating =
               response_rating.data.data.userProfilePublicProfile.profile
-                .contestCount === 1
+                .contestCount === 0
                 ? 1500
                 : parseFloat(
                     response_rating.data.data.userProfilePublicProfile.profile
@@ -77,8 +85,8 @@ const RatingFetch = async (respon) => {
     console.log("All ratings fetched!");
     return response;
   } catch (error) {
-    console.log("Error in Rating Fetching");
-    console.log(error);
+    console.error("Error in Rating Fetching:", error.message);
+    throw error;
   }
 };
 module.exports = RatingFetch;
