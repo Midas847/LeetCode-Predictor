@@ -353,16 +353,6 @@
     "want_separate_host_toolset": 0,
     "nodedir": "C:\\Users\\iamro\\AppData\\Local\\node-gyp\\Cache\\16.14.0",
     "standalone_static_library": 1,
-    "msbuild_path": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\MSBuild\\15.0\\Bin\\MSBuild.exe",
-    "cache": "C:\\Users\\iamro\\AppData\\Local\\npm-cache",
-    "globalconfig": "C:\\Users\\iamro\\AppData\\Roaming\\npm\\etc\\npmrc",
-    "global_prefix": "C:\\Users\\iamro\\AppData\\Roaming\\npm",
-    "init_module": "C:\\SPB_Data\\.npm-init.js",
-    "local_prefix": "C:\\Users\\iamro\\OneDrive\\Documents\\GitHub\\LeetCode-Predictor\\Rating_Algorithm",
-    "metrics_registry": "https://registry.npmjs.org/",
-    "node_gyp": "C:\\Users\\iamro\\AppData\\Roaming\\npm\\node_modules\\npm\\node_modules\\node-gyp\\bin\\node-gyp.js",
-    "prefix": "C:\\Users\\iamro\\AppData\\Roaming\\npm",
-    "userconfig": "C:\\SPB_Data\\.npmrc",
-    "user_agent": "npm/9.4.0 node/v16.14.0 win32 x64 workspaces/false"
+    "msbuild_path": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\MSBuild\\15.0\\Bin\\MSBuild.exe"
   }
 }

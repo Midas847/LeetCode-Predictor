@@ -1,6 +1,6 @@
 const fs = require("fs");
 const addon = require("./build/Release/Predict_Addon");
-const filePath = "./test/weekly.json";
+const filePath = "./test/data.json";
 const data = JSON.parse(fs.readFileSync(filePath));
 
 let predictedRatings = [];
@@ -8,6 +8,7 @@ let predictedRatings = [];
 console.time("rating predictions (C++)");
 predictedRatings = addon.predict(data, 4);
 console.log(predictedRatings);
+fs.writeFileSync("example.json", JSON.stringify(predictedRatings), "utf-8");
 console.timeEnd("rating predictions (C++)");
 
 // Predictions with JavaScript
