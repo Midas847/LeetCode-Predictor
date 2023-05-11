@@ -5,7 +5,6 @@ import axios from "axios";
 import { InfinitySpin } from "react-loader-spinner";
 
 const Pagination = (props) => {
-  const [notFound, setnotFound] = useState(false);
   const [search, setsearch] = useState("");
   const [click, setClick] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -40,15 +39,15 @@ const Pagination = (props) => {
       )
       .then((res) => {
         if (res.data === "User not found") {
-          setsearchValue([
-            {
-              rank: "",
-              username: "",
-              rating: "",
-              predictedRating: "",
-              region: "",
-            },
-          ]);
+          let defaultstate = {
+            isFirstContest: false,
+            username: "User not found",
+            rating: 0,
+            rank: 0,
+            region: "null",
+            predictedRating: 0,
+          };
+          setsearchValue(defaultstate);
           console.log(searchValue);
         } else {
           setsearchValue(res.data);
