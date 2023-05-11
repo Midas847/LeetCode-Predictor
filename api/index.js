@@ -8,7 +8,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 app.use(express.json());
 
-var port = 3500 || process.env.PORT;
+const port = 3000 || process.env.PORT;
 mongoose
   .connect(process.env.MONGODB_URL, {
     useNewUrlParser: true,
@@ -19,4 +19,4 @@ mongoose
 
 app.use("/api/routes/leetcode", leetcode);
 
-app.listen(port, () => console.log(`Listening on port 3500`));
+app.listen(port, () => console.log(`Listening on port 3000`));
