@@ -17,7 +17,7 @@ const Home = () => {
     setLoading(true);
     axios
       .get(
-        `http://localhost:3500/api/routes/leetcode/getContestData?page=${currentPage}&limit=10`
+        `https://maroon-waders.cyclic.app/api/routes/leetcode/getContestData?page=${currentPage}&limit=10`
       )
       .then((res) => {
         // console.log(res.data);

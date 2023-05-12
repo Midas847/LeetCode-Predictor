@@ -21,7 +21,7 @@ const Contest = () => {
     setLoading(true);
     axios
       .get(
-        `http://localhost:3500/api/routes/leetcode/getContestRankings?contestId=${contestId}&page=${currentPage}&limit=25`
+        `https://maroon-waders.cyclic.app/api/routes/leetcode/getContestRankings?contestId=${contestId}&page=${currentPage}&limit=25`
       )
       .then((res) => {
         setData(res.data[0].rankings);

@@ -35,7 +35,7 @@ const Pagination = (props) => {
     setLoading(true);
     axios
       .get(
-        `http://localhost:3500/api/routes/leetcode/getUser?contestId=${contestId}&userId=${search}`
+        `https://maroon-waders.cyclic.app/api/routes/leetcode/getUser?contestId=${contestId}&userId=${search}`
       )
       .then((res) => {
         if (res.data === "User not found") {
