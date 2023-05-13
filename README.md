@@ -75,4 +75,13 @@ npm install
 npm start
 ```
 
+## Environment variables
+
+```
+MONGODB_URL: your mongodb collection URL
+```
+
 ## Contributors
+<a href="https://github.com/Midas847/LeetCode-Predictor/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Midas847/LeetCode-Predictorr" />
+</a>
