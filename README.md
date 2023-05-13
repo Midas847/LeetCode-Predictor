@@ -32,9 +32,47 @@ You can check it out here [https://leetcode.com/discuss/general-discussion/46885
 * [Node.js](https://nodejs.org/en): open-source, cross-platform JavaScript runtime environment
 * [Express](https://expressjs.com/) : Node.js framework
 * [C++ addon](https://nodejs.org/api/addons.html) : core prediction algorithm implementation and acceleration
+* [Bottleneck](https://github.com/SGrondin/bottleneck#readme) : lightweight and zero-dependency Task Scheduler and Rate Limiter for Node.js and the browser
+* [Node-cache](https://github.com/node-cache/node-cache) : A simple tool for caching data.
+* [Axios](https://axios-http.com/) : To make API calls.
 
 ## Frontend
 
 * [React](https://reactjs.org/): most popular front-end library
 * [TailwindCSS](https://tailwindcss.com/) : modern CSS framework and its component library
 
+
+# Development
+
+Follow these steps to run the app locally.
+
+## Backend Deployment
+
+### C++ addon
+```
+git clone https://github.com/Midas847/LeetCode-Predictor.git
+cd Rating_Algorithm
+npm i -g node-gyp
+node-gyp configure
+node-gyp build
+```
+
+### Sever 
+
+```
+git clone https://github.com/Midas847/LeetCode-Predictor.git
+cd api
+npm install
+npm start
+```
+
+## Frontend Deployment
+
+```
+git clone https://github.com/Midas847/LeetCode-Predictor.git
+cd client
+npm install
+npm start
+```
+
+## Contributors
