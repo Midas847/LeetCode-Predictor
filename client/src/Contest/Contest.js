@@ -31,9 +31,6 @@ const Contest = () => {
       .catch((error) => {
         console.log(error);
       });
-    // console.log("minPageLimit" + minPageLimit);
-    // console.log("maxPageLimit" + maxPageLimit);
-    // console.log("currentPage" + currentPage);
   }, [contestId, currentPage]);
 
   const onPageChange = (pageNumber) => {
