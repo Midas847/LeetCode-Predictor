@@ -1,7 +1,7 @@
 const { default: axios } = require("axios");
 const User = require("../models/User");
 const router = require("express").Router();
-const query = require("./Queries/contestInfo.js");
+const query = require("../queries/contestInfo.js");
 const fs = require("fs");
 const Bottleneck = require("bottleneck");
 const NodeCache = require("node-cache");
