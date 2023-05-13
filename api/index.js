@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const cors = require("cors");
-const leetcode = require("./routes/leetcode2");
+const leetcode = require("./controllers/leetcode");
 app.use(cors());
 const dotenv = require("dotenv");
 dotenv.config();

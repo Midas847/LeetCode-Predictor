@@ -1,8 +1,5 @@
 const { default: axios } = require("axios");
-// const router = require("express").Router();
-// const query = require("./Queries/contestInfo.js");
 const addon = require("../.././Rating_Algorithm//build/Release/Predict_Addon");
-// const URL = "https://leetcode.com/contest/api/ranking/biweekly-contest-101/";
 const fs = require("fs");
 const Bottleneck = require("bottleneck");
 const User = require("../models/updatedUser");
@@ -22,23 +19,12 @@ const RatingPredict = async (respon, URL) => {
   let predictedRatings = [];
   let result = [];
   try {
-    // const respon = await User.find(
-    //   {},
-    //   {
-    //     _id: 0,
-    //     isFirstContest: 1,
-    //     username: 1,
-    //     rating: 1,
-    //     rank: 1,
-    //   }
-    // );
     predictedRatings = addon.predict(respon, 6);
     for (obj of respon) {
       obj.predictedRating = predictedRatings.shift();
     }
 
     const savedUsers = await predicteduser.insertMany(respon);
-    // const contestInfo = await axios.get(contest_query_url);
 
     const contest = await new Contest({
       contestName: URL,

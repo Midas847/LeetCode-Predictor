@@ -1,7 +1,7 @@
 import React from "react";
-import Footer from "./Footer";
-import Navbar from "./Navbar";
-import Banner from "./Banner";
+import Footer from "../Footer/Footer";
+import Navbar from "../Header/Navbar";
+import Banner from "../Header/Banner";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 

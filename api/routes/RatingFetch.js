@@ -1,8 +1,4 @@
 const { default: axios } = require("axios");
-const User = require("../models/User");
-const updatedUser = require("../models/updatedUser");
-const router = require("express").Router();
-const query = require("./Queries/contestInfo.js");
 // const URL = "https://leetcode.com/contest/api/ranking/biweekly-contest-101/";
 const fs = require("fs");
 const Bottleneck = require("bottleneck");
@@ -25,7 +21,6 @@ const RatingFetch = async (respon) => {
   let result = [];
   let response = [];
   try {
-    // const respon = await User.find({}, { _id: 0 });
     for (const item of respon) {
       if (item === null) continue;
       let username = item.username;
@@ -80,8 +75,7 @@ const RatingFetch = async (respon) => {
       console.log(item);
       response.push(item);
     }
-    // const savedUsers = await updatedUser.insertMany(result);
-    // console.log(savedUsers);
+
     console.log("All ratings fetched!");
     return response;
   } catch (error) {

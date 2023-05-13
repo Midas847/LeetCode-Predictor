@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
+import Navbar from "../Header/Navbar";
+import Footer from "../Footer/Footer";
 import axios from "axios";
 import { InfinitySpin } from "react-loader-spinner";
 
@@ -10,10 +10,8 @@ const Pagination = (props) => {
   const [loading, setLoading] = useState(false);
   const [searchValue, setsearchValue] = useState([]);
   const { currentPage, maxPageLimit, minPageLimit, contestId } = props;
-  const totalPages = 50;
+  const totalPages = 500;
   const data = props.response;
-  // console.log(props);
-  // build page numbers list based on total number of pages
   const pages = [];
   for (let i = 1; i <= totalPages; i++) {
     pages.push(i);

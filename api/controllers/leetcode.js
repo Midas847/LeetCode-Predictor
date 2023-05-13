@@ -1,14 +1,10 @@
 const { default: axios } = require("axios");
 const router = require("express").Router();
-const query = require("./Queries/contestInfo.js");
-const fs = require("fs");
-const Bottleneck = require("bottleneck");
-const addon = require("../.././Rating_Algorithm//build/Release/Predict_Addon");
-const RankFetch = require("./RankFetch.js");
-const RatingFetch = require("./RatingFetch.js");
-const RatingPredict = require("./RatingPredict.js");
-const predictedUser = require("../models/predictedUser");
-const Contest = require("../models/Contest");
+const RankFetch = require("../routes/RankFetch.js");
+const RatingFetch = require("../routes/RatingFetch.js");
+const RatingPredict = require("../routes/RatingPredict.js");
+const predictedUser = require("../models/predictedUser.js");
+const Contest = require("../models/Contest.js");
 const contest_query_url = `https://leetcode.com/graphql?query=query{
   allContests
   {
@@ -21,14 +17,6 @@ const contest_query_url = `https://leetcode.com/graphql?query=query{
 let result = [];
 router.get("/", async (req, res) => {
   try {
-    // console.log("Fetching Contest Data");
-    // console.time("Time Taken : ");
-    // await RankFetch(result);
-    // let x = await RatingFetch(result);
-    // await RatingPredict(x);
-    //console.log(x);
-    // await res.send(result);
-    // console.timeEnd("Time Taken : ");
     return res.status(200).json("Welcome to homepage!");
   } catch (err) {
     console.log(err);
