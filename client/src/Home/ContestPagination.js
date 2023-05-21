@@ -118,7 +118,12 @@ const ContestPagination = (props) => {
                     )}
                   </td>
                   <td className="whitespace-nowrap  px-6 py-4">90 min</td>
-                  <td className="whitespace-nowrap  px-6 py-4">No</td>
+                  {/* <td className="whitespace-nowrap  px-6 py-4"></td> */}
+                  {contest.ratings_predicted ? (
+                    <td className="whitespace-nowrap  px-6 py-4">Yes</td>
+                  ) : (
+                    <td className="whitespace-nowrap  px-6 py-4">No</td>
+                  )}
                   <td className="whitespace-nowrap  px-6 py-4">
                     {moment(contest.startTime * 1000).format(
                       "DD/MM/yyyy HH:MM:SS"

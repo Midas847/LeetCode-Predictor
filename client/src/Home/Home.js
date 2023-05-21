@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { InfinitySpin } from "react-loader-spinner";
+
 import ContestPagination from "./ContestPagination";
+import { publicRequest } from "../requestMethods";
+import Loader from "../Loader";
 
 const Home = () => {
   const [contests, setcontests] = useState([]);
@@ -15,12 +16,10 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     setLoading(true);
-    axios
-      .get(
-        `https://maroon-waders.cyclic.app/api/routes/leetcode/getContestData?page=${currentPage}&limit=10`
-      )
+    publicRequest
+      .get(`/getContestData?page=${currentPage}&limit=10`)
       .then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
         setcontests(res.data);
         setLoading(false);
       })
@@ -59,9 +58,7 @@ const Home = () => {
   return (
     <>
       {loading ? (
-        <div className="flex justify-center items-center mt-[300px]">
-          <InfinitySpin width="200" color="#243c5a" />
-        </div>
+        <Loader />
       ) : (
         <ContestPagination
           {...paginationAttributes}
