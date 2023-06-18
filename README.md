@@ -48,7 +48,7 @@ Follow these steps to run the app locally.
 ## Backend Deployment
 
 ### C++ addon
-
+Delete the build folder before proceeding.
 ```
 git clone https://github.com/Midas847/LeetCode-Predictor.git
 cd Rating_Algorithm
